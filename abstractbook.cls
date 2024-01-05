@@ -124,7 +124,7 @@
 {
     \cleardoublepage
     \pagestyle{firstcoverpage}
-    \newgeometry{left=10mm,right=10mm,top=10mm,bottom=20mm}
+    \newgeometry{left=10mm,right=10mm,top=20mm,bottom=20mm}
     \fancyfootoffset{0pt}
 }{
     \newpage
