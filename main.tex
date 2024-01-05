@@ -1,0 +1,81 @@
+\documentclass[
+  twoside,
+  9pt,
+  a5paper,
+  openright,
+  marginleft=15mm,
+  marginright=15mm,
+  margintop=25mm,
+  marginbottom=20mm,
+  bindingoffset=6mm
+]{abstractbook}
+
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{afterpage}
+\usepackage{fontspec} % This requires XeLaTeX
+\usepackage{graphicx}
+\usepackage{eso-pic}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tabularray}
+\usepackage{colortbl}
+
+\setmainfont{Times New Roman}
+
+\usepackage[
+    type={CC},
+    modifier={by-nc-nd},
+    version={3.0},
+]{doclicense}
+
+%\titleformat{\section}[block]{}{}{}{}
+
+\begin{document}
+{
+    \thispagestyle{firstpage}
+    \AddToShipoutPictureBG*{
+        \AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight,trim=1cm 1cm 1cm 1cm,clip]{images/bms.pdf}}
+    }
+    \newpage 
+    \
+    \newpage
+}
+{
+    \thispagestyle{firstpage}
+    \AddToShipoutPictureBG*{
+        \AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight,clip]{images/macrogen.pdf}}
+    }
+    \newpage 
+    \
+    \newpage
+}
+
+\maketitle
+\insertcopyrightnotice
+\pagenumbering{roman}
+\include{chapters/timetable}
+\include{chapters/introduction}
+\include{chapters/zulip-howto}
+
+\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\contentsname}\tableofcontents\newpage
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\titleformat{name=\chapter}[display]
+  {\bfseries\centering}
+  {} % no label
+  {0pt} % space above
+  {\Huge} % chapter title font size
+  [\clearpage]
+
+\titleformat{name=\section,numberless}[display]
+  {\bfseries\centering}
+  {}
+  {0pt}
+  {\normalsize}
+  
+\include{chapters/talks}
+\include{chapters/posters}
+\end{document}
