@@ -10,7 +10,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions \relax
 \DeclareOptionX{marginleft}{\def\@marginleft{#1}}
-\DeclareOptionX{marginright}{\def\@margintop{#1}}
+\DeclareOptionX{marginright}{\def\@marginright{#1}}
 \DeclareOptionX{margintop}{\def\@margintop{#1}}
 \DeclareOptionX{marginbottom}{\def\@marginbottom{#1}}
 \DeclareOptionX{bindingoffset}{\def\@bindingoffset{#1}}
@@ -42,7 +42,6 @@
 \ifx\@bindingoffset\undefined
     \def\@bindingoffset{6mm}
 \fi
-\RequirePackage[left=\@marginleft,right=\@marginright,top=\@margintop,bottom=\@marginbottom,bindingoffset=\@bindingoffset]{geometry}
 \RequirePackage{pgffor}
 \RequirePackage{etoolbox}
 \RequirePackage{stfloats}
@@ -52,6 +51,7 @@
 \RequirePackage{adjustbox}
 \RequirePackage{longtable}
 \RequirePackage{emptypage}
+\RequirePackage[left=\@marginleft,right=\@marginright,top=\@margintop,bottom=\@marginbottom,bindingoffset=\@bindingoffset,includeheadfoot]{geometry}
 
 \setlength\LTleft{0pt}
 \setlength\LTright{0pt}
@@ -103,36 +103,47 @@
 }
 \makeatother
 
+\newcommand{\insertbookcover}[2][]{
+    {
+        \thispagestyle{firstpage}
+        \AddToShipoutPictureBG*{
+            \AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight,clip,#1]{#2}}
+        }
+        \addtocounter{page}{-1}
+        \null\newpage
+    }
+}
+
+\newcommand{\insertad}[2][]{
+    {
+        \thispagestyle{firstpage}
+        \AddToShipoutPictureBG*{
+            \AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight,clip,#1]{#2}}
+        }
+        \null\newpage
+    }
+}
+
 \newenvironment{coverpage}[1]
 {
-    \restoregeometry
     \cleardoublepage
     \thispagestyle{firstcoverpage}
     \renewcommand{\sectionmark}[1]{\markright{#1}{}}
     \chaptermark{#1}\sectionmark{#1}
-    \null\vskip 50pt
-    \begin{center}
-    \section*{#1}
-    \addcontentsline{toc}{chapter}{#1}
-    \null\vskip 20pt
-    \end{center}
+    \chapter*{#1}\addcontentsline{toc}{chapter}{#1}
 }{
     \newpage
 }
 
 \newenvironment{timetable}
 {
-    \cleardoublepage
-    \pagestyle{firstcoverpage}
-    \newgeometry{left=10mm,right=10mm,top=20mm,bottom=20mm}
-    \fancyfootoffset{0pt}
+    \pagestyle{firstpage}
 }{
     \newpage
 }
 
 \newenvironment{fullpage}
 {
-    \cleardoublepage
     \pagestyle{firstpage}
     \newgeometry{left=0mm,right=0mm,top=0mm,bottom=0mm,bindingoffset=0mm}
 }{

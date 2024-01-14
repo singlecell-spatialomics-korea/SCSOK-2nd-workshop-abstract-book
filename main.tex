@@ -1,12 +1,12 @@
 \documentclass[
   twoside,
-  9pt,
+  8pt,
   a5paper,
   openright,
   marginleft=15mm,
   marginright=15mm,
-  margintop=25mm,
-  marginbottom=20mm,
+  margintop=15mm,
+  marginbottom=15mm,
   bindingoffset=6mm
 ]{abstractbook}
 
@@ -16,10 +16,13 @@
 \usepackage{fontspec} % This requires XeLaTeX
 \usepackage{graphicx}
 \usepackage{eso-pic}
+\usepackage{tocloft}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{tabularray}
 \usepackage{colortbl}
+\usepackage{setspace}
+\usepackage[splitindex]{imakeidx}
 
 \setmainfont{Times New Roman}
 
@@ -29,52 +32,47 @@
     version={4.0},
 ]{doclicense}
 
+\makeindex[name=keyword, columns=1, title=Keyword Index, intoc]
+\makeindex[name=author, columns=2, title=Author Index, intoc]
+
+\setcounter{secnumdepth}{-2}
+
 \begin{document}
-{
-    \thispagestyle{firstpage}
-    \AddToShipoutPictureBG*{
-        \AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight,trim=1cm 1cm 1cm 1cm,clip]{images/bms.pdf}}
-    }
-    \newpage 
-    \
-    \newpage
-}
-{
-    \thispagestyle{firstpage}
-    \AddToShipoutPictureBG*{
-        \AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight,clip]{images/macrogen.pdf}}
-    }
-    \newpage 
-    \
-    \newpage
-}
-
-\maketitle
-\insertcopyrightnotice
-\pagenumbering{roman}
-\include{chapters/map}
-\include{chapters/timetable}
-\include{chapters/introduction}
-\include{chapters/zulip-howto}
-
-\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\contentsname}\tableofcontents\newpage
-
-\cleardoublepage
-\pagenumbering{arabic}
-
-\titleformat{name=\chapter}[display]
-  {\bfseries\centering}
-  {} % no label
-  {0pt} % space above
-  {\Huge} % chapter title font size
-  [\clearpage]
-
-\titleformat{name=\section,numberless}[display]
-  {\bfseries\centering}
-  {}
-  {0pt}
-  {\normalsize}
-  
-\include{chapters/talks}
-\include{chapters/posters}
+    \begingroup
+        \let\cleardoublepage\clearpage
+        \insertbookcover{images/bookcover.png}
+        \insertad{images/acknowledgments.pdf}
+        \insertad{images/theragen.pdf}
+        \insertad{images/macrogen.pdf}
+        \insertad[trim=1cm 1cm 1cm 1cm]{images/bms.pdf}
+        
+        \maketitle
+        
+        \insertcopyrightnotice
+        \include{chapters/map}
+        \include{chapters/timetable}
+    \endgroup
+    
+    \pagenumbering{roman}
+    \cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\contentsname}\tableofcontents\newpage
+    \include{chapters/introduction}
+    \include{chapters/zulip-howto}
+    
+    \cleardoublepage
+    \pagenumbering{arabic}
+    
+    \titleformat{name=\chapter}[display]{\bfseries\centering}{}{0pt}{\Huge}[\clearpage]
+    \titleformat{name=\section,numberless}[display]{\bfseries\centering}{}{0pt}{\normalsize}
+    
+    \part{Abstracts}
+    
+    \setstretch{1} % line spacing
+    
+    \include{chapters/talks}
+    \include{chapters/posters}
+    
+    \part{Index}
+    
+    \printindex[keyword]
+    \printindex[author]
 \end{document}
