@@ -23,6 +23,8 @@
 \usepackage{colortbl}
 \usepackage{setspace}
 \usepackage[splitindex]{imakeidx}
+\usepackage{academicons}
+\definecolor{orcidlogocol}{HTML}{A6CE39}
 
 \setmainfont{Times New Roman}
 
@@ -52,7 +54,8 @@
         \include{chapters/map}
         \include{chapters/timetable}
     \endgroup
-    
+
+    \cleardoublepage
     \pagenumbering{roman}
     \cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\contentsname}\tableofcontents\newpage
     \include{chapters/introduction}
